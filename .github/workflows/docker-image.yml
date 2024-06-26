@@ -24,10 +24,17 @@ jobs:
 
     - name: Build the Docker image
       id: build
-      run: docker build . --file Dockerfile --tag sprint-planner:$(date +%s)
+      run: docker build . --file Dockerfile --tag sprint-planner:latest
 
-    - name: Tag the Docker image
-      run: docker tag sprint-planner:$(date +%s) emcpheron/sprint-planner:latest
+    - name: Tag the Docker image with timestamp
+      id: tag
+      run: |
+        TIMESTAMP=$(date +%s)
+        docker tag sprint-planner:latest emcpheron/sprint-planner:$TIMESTAMP
+        docker tag sprint-planner:latest emcpheron/sprint-planner:latest
+        echo "::set-output name=timestamp::$TIMESTAMP"
 
     - name: Push the Docker image to Docker Hub
-      run: docker push emcpheron/sprint-planner:latest
+      run: |
+        docker push emcpheron/sprint-planner:latest
+        docker push emcpheron/sprint-planner:${{ steps.tag.outputs.timestamp }}
