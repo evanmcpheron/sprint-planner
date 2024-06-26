@@ -47,4 +47,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           new_version=${{ steps.increment_version.outputs.new_version }}
-          gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
+gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
