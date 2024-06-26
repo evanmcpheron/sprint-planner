@@ -26,7 +26,7 @@ jobs:
 
     - name: Build the Docker image
       id: build
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag sprint-planner:$(date +%s)
 
     - name: Tag the Docker image
       run: docker tag my-image-name:$(date +%s) emcpheron/sprint-planner:latest
