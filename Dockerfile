@@ -18,7 +18,7 @@ COPY client/package*.json ./
 
 # Install client dependencies
 RUN npm install
-
+ENV NODE_ENV=production
 # Build the React app
 RUN npm run build
 
