@@ -25,9 +25,6 @@ RUN npm run build
 # Move back to the root working directory
 WORKDIR /app
 
-# Copy the built React app to the root's build directory
-RUN mkdir -p public && mv /app/client/build/* public/
-
 # Copy the rest of the application code
 COPY . .
 
