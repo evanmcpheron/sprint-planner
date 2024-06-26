@@ -27,7 +27,7 @@ jobs:
       run: docker build . --file Dockerfile --tag sprint-planner:$(date +%s)
 
     - name: Tag the Docker image
-      run: docker tag my-image-name:$(date +%s) emcpheron/sprint-planner:latest
+      run: docker tag sprint-planner:$(date +%s) emcpheron/sprint-planner:latest
 
     - name: Push the Docker image to Docker Hub
       run: docker push emcpheron/sprint-planner:latest
