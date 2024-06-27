@@ -10,41 +10,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Get the current version
-        id: get_version
-        run: echo "::set-output name=current_version::$(git describe --tags --abbrev=0 || echo '0.0.0')"
+    - name: Get the current version
+      id: get_version
+      run: echo "::set-output name=current_version::$(git describe --tags --abbrev=0 || echo '0.0.0')"
 
-      - name: Increment version
-        id: increment_version
-        run: |
-          current_version=${{ steps.get_version.outputs.current_version }}
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          major=${version_parts[0]}
-          minor=${version_parts[1]}
-          patch=${version_parts[2]}
-          new_patch=$((patch + 1))
-          new_version="$major.$minor.$new_patch"
-          echo "::set-output name=new_version::$new_version"
+    - name: Increment version
+      id: increment_version
+      run: |
+        current_version=${{ steps.get_version.outputs.current_version }}
+        IFS='.' read -r -a version_parts <<< "$current_version"
+        major=${version_parts[0]}
+        minor=${version_parts[1]}
+        patch=${version_parts[2]}
+        new_patch=$((patch + 1))
+        new_version="$major.$minor.$new_patch"
+        echo "::set-output name=new_version::$new_version"
 
-      - name: Create new tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          new_version=${{ steps.increment_version.outputs.new_version }}
-          git tag $new_version
-          git push origin $new_version
+    - name: Create new tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        new_version=${{ steps.increment_version.outputs.new_version }}
+        git tag $new_version
+        git push origin $new_version
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh
+    - name: Install GitHub CLI
+      run: sudo apt-get install gh
 
-      - name: Create GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          new_version=${{ steps.increment_version.outputs.new_version }}
-          gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
+    - name: Create GitHub release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        new_version=${{ steps.increment_version.outputs.new_version }}
+        gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
