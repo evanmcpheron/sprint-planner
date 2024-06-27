@@ -56,6 +56,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "chore: bump version to ${{ env.new_version }}"
         branch: version-bump-${{ env.new_version }}
+        base: main
         title: "Version Bump to ${{ env.new_version }}"
         body: "Bumps the version to ${{ env.new_version }}."
 
