@@ -1,0 +1,11 @@
+Dockerfile
+*.swp
+*.swo
+**/node_modules
+node_module
+**/build
+build
+.gitlab-ci.yml
+testResults
+.git
+clientbuild
