@@ -22,7 +22,7 @@ jobs:
       - name: Increment patch version
         uses: yoichiro/gh-action-increment-value@v5
         with:
-          target_directory: '.'
+          target_directory: $GITHUB_WORKSPACE
           target_file: 'versions.txt'
           prefix: 'versionPatch:'
           suffix: ']'
