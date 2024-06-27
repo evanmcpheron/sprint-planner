@@ -10,59 +10,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-      - name: Get current version from package.json
-        id: get_version
-        run: |
-          current_version=$(jq -r '.version' package.json)
-          echo "current_version=${current_version}" >> $GITHUB_ENV
+    - name: Get current version from package.json
+      id: get_version
+      run: |
+        current_version=$(jq -r '.version' package.json)
+        echo "current_version=${current_version}" >> $GITHUB_ENV
 
-      - name: Increment version
-        id: increment_version
-        run: |
-          current_version=${{ env.current_version }}
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          major=${version_parts[0]}
-          minor=${version_parts[1]}
-          patch=${version_parts[2]}
-          new_patch=$((patch + 1))
-          new_version="$major.$minor.$new_patch"
-          echo "new_version=${new_version}" >> $GITHUB_ENV
+    - name: Increment version
+      id: increment_version
+      run: |
+        current_version=${{ env.current_version }}
+        IFS='.' read -r -a version_parts <<< "$current_version"
+        major=${version_parts[0]}
+        minor=${version_parts[1]}
+        patch=${version_parts[2]}
+        new_patch=$((patch + 1))
+        new_version="$major.$minor.$new_patch"
+        echo "new_version=${new_version}" >> $GITHUB_ENV
 
-      - name: Update package.json version
-        run: |
-          jq ".version = \"${{ env.new_version }}\"" package.json > package.json.tmp
-          mv package.json.tmp package.json
+    - name: Update package.json version
+      run: |
+        jq ".version = \"${{ env.new_version }}\"" package.json > package.json.tmp
+        mv package.json.tmp package.json
 
-      - name: Commit version bump
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add package.json
-          git commit -m "chore: bump version to ${{ env.new_version }}"
-          git push origin main
+    - name: Commit version bump
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add package.json
+        git commit -m "chore: bump version to ${{ env.new_version }}"
+        git push origin main
 
-      - name: Create new tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          new_version=${{ env.new_version }}
-          git tag $new_version
-          git push origin $new_version
+    - name: Create new tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        new_version=${{ env.new_version }}
+        git tag $new_version
+        git push origin $new_version
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh
+    - name: Install GitHub CLI
+      run: sudo apt-get install gh
 
-      - name: Create GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          new_version=${{ env.new_version }}
-          gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
+    - name: Create GitHub release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        new_version=${{ env.new_version }}
+        gh release create $new_version --title "Release $new_version" --notes "Release notes for version $new_version"
