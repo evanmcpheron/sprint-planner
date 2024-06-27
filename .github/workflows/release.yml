@@ -19,11 +19,17 @@ jobs:
           token: ${{ secrets.PAT }}
           ref: main
 
-      - name: Increment patch version
-        uses: yoichiro/gh-action-increment-value@v5
+      - name: Update Version
+        uses: TriPSs/conventional-changelog-action@v5
         with:
-          target_directory: $GITHUB_WORKSPACE
-          target_file: 'versions.txt'
-          prefix: 'versionPatch:'
-          suffix: ']'
-          commit_message: '[skip ci] Increments the patch version to'
+          github-token: ${{ secrets.PAT }}
+          git-message: 'chore(release): {version}'
+          git-user-name: ${{ secrets.GH_USERNAME }}
+          git-user-email: ${{ secrets.GH_EMAIL }}
+          preset: 'angular'
+          tag-prefix: 'v'
+          release-count: '10'
+          version-file: './versions.json'
+          skip-on-empty: 'false'
+          skip-version-file: 'false'
+          skip-commit: 'false'
