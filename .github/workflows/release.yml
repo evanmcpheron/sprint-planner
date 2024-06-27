@@ -26,3 +26,4 @@ jobs:
           github-token: ${{ secrets.PAT }}
           git-message: 'chore(release): {version}'
           version-file: 'version.json'
+          version-path: '.'
