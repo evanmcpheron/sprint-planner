@@ -32,6 +32,9 @@ const origin =
     ? 'https://www.example.com'
     : 'http://localhost:3000'
 
+const clientPath =
+  process.env.NODE_ENV === 'production' ? 'client' : 'clientbuild'
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(
@@ -57,9 +60,9 @@ app.use((req, res, next) => {
 connectSockets(app, server, io)
 
 app.use('/v1', routes(application))
-app.use(express.static('client/build'))
+app.use(express.static(clientPath))
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  res.sendFile(path.resolve(__dirname, clientPath, 'index.html'))
 })
 
 if (process.env.NODE_ENV !== 'test') {

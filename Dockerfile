@@ -1,32 +1,48 @@
+#Base image to use for building and installing
+FROM node:20.15.0-alpine as base
+USER node
+WORKDIR /home/node
+EXPOSE 8080
+ENV NODE_ENV=production
 
-# Use the official Node.js 22.3.0 image as a base
-FROM node:22.3.0 as base
-
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json (if available) for the root directory
-COPY package*.json ./
-
-# Install dependencies in the root directory
+#Build the client
+#This will install packages first to optimize layers. i.e. if the package.json file doesn't change, then it won't have to reinstall
+FROM base as client
+USER root
+WORKDIR client
+COPY ./client/package.json ./client/package-lock.json ./
+RUN chown node:node package.json package-lock.json ./
 RUN npm install
+COPY ./client ./
+RUN npm run build \
+    && chown node:node ./ \
+    && chown -R node:node ./build
 
-# Copy the entire client directory to the container
-COPY client/ ./client/
+#Setup the server dependencies
+#This will install packages first to optimize layers. i.e. if the package.json file doesn't change, then it won't have to reinstall
+FROM base as server
+USER root
+WORKDIR server
+COPY ./server/package.json ./server/package-lock.json ./
+RUN chown node:node package.json package-lock.json ./
+USER node
 
-# Install client dependencies and build the React app
-WORKDIR /usr/src/app/client
-RUN npm install
-RUN npm run build
+RUN npm install --only=prod \
+    && npm cache clean --force \
+    && npm cache verify
 
-# Change back to the root directory
-WORKDIR /usr/src/app
+USER root
+COPY ./server ./temp/
+RUN chown -R node:node ./temp \
+  && rm -rf ./temp/node_modules \
+  && mv ./temp/* ./  \
+  && rm -rf ./temp
 
-# Copy the rest of the server code
-COPY . .
+#Setup the server image (keep layers as small as possible)
+FROM base
+COPY --from=client /home/node/client/build /home/node/client
+COPY --from=server /home/node/server /home/node
+CMD [ "npm", "start" ]
 
-# Expose the port the app runs on
-EXPOSE 3000
 
-# Command to run your app
-CMD ["node", "server.js"]
+
