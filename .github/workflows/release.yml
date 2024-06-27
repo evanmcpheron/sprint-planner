@@ -24,12 +24,3 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           git-message: 'chore(release): {version}'
-          git-user-name: ${{ secrets.GH_USERNAME }}
-          git-user-email: ${{ secrets.GH_EMAIL }}
-          preset: 'angular'
-          tag-prefix: 'v'
-          release-count: '10'
-          version-file: './versions.json'
-          skip-on-empty: 'false'
-          skip-version-file: 'false'
-          skip-commit: 'false'
