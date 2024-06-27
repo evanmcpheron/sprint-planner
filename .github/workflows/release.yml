@@ -18,6 +18,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           ref: main
+          sparse-checkout: .github/workflows
 
       - name: Update Version
         uses: TriPSs/conventional-changelog-action@v5
