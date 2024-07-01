@@ -58,12 +58,16 @@ jobs:
       - name: Update values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: './chart/values.yaml'
+          branch: 'main'
+          valueFile: 'chart/values.yaml'
           propertyPath: 'file.version'
           value: ${{ steps.semantic.outputs.new_release_version}}
+          force: true
       - name: Update second values.yaml version
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: './chart/values.yaml'
+          valueFile: 'chart/values.yaml'
           propertyPath: 'file.appVersion'
+          branch: 'main'
+          force:true
           value: 'v${{steps.semantic.outputs.new_release_version}}'
