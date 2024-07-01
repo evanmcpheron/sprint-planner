@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { useState, useContext, useEffect } from 'react'
 import { Check, Close } from '@mui/icons-material'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { countVotes } from '../services/countVotes'
@@ -50,7 +50,7 @@ const VotersTable = ({ votes, addUserToList, resetUserVotes }) => {
       resetUserVotes()
       addUserToList(users)
     })
-  }, [visible])
+  }, [addUserToList, resetUserVotes, socket, visible])
 
   const parseData = (data) => {
     if (visible) {

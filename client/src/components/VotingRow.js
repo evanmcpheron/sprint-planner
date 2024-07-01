@@ -1,19 +1,19 @@
-import { Button, TableCell, TableRow } from "@mui/material";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { useContext, useState, useEffect } from "react";
-import { SocketContext } from "../context/socket";
+import { Button, TableCell, TableRow } from '@mui/material'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { useContext, useState, useEffect } from 'react'
+import { SocketContext } from '../context/socket'
 
 const VotingRow = ({ vote, updateVotes, user }) => {
-  const socket = useContext(SocketContext);
-  const [visible, setVisible] = useState(false);
-  const id = user.id;
+  const socket = useContext(SocketContext)
+  const [visible, setVisible] = useState(false)
+  const id = user.id
 
   useEffect(() => {
-    socket.on("change-point-visibility", (visibility) => {
-      setVisible(visibility);
-    });
-  }, [visible]);
+    socket.on('change-point-visibility', (visibility) => {
+      setVisible(visibility)
+    })
+  }, [socket, visible])
 
   return (
     <TableRow>
@@ -22,13 +22,19 @@ const VotingRow = ({ vote, updateVotes, user }) => {
       </TableCell>
       <TableCell align="right">
         <Button
-          className={"vote-button"}
-          variant={vote.value === "N/A" || vote.value === "EPIC" || vote.value === "NOT VOTING" ? "contained" : "text"}
+          className={'vote-button'}
+          variant={
+            vote.value === 'N/A' ||
+            vote.value === 'EPIC' ||
+            vote.value === 'NOT VOTING'
+              ? 'contained'
+              : 'text'
+          }
           size="large"
           disabled={visible}
-          color={"primary"}
+          color={'primary'}
           onClick={() =>
-            updateVotes({ category: vote.category, value: "N/A", id })
+            updateVotes({ category: vote.category, value: 'N/A', id })
           }
         >
           N/A
@@ -36,13 +42,13 @@ const VotingRow = ({ vote, updateVotes, user }) => {
       </TableCell>
       <TableCell align="right">
         <Button
-          className={"vote-button "}
-          variant={vote.value === "LOW" ? "contained" : "text"}
+          className={'vote-button '}
+          variant={vote.value === 'LOW' ? 'contained' : 'text'}
           size="large"
           disabled={visible}
-          color={"primary"}
+          color={'primary'}
           onClick={() =>
-            updateVotes({ category: vote.category, value: "LOW", id })
+            updateVotes({ category: vote.category, value: 'LOW', id })
           }
         >
           LOW
@@ -50,13 +56,13 @@ const VotingRow = ({ vote, updateVotes, user }) => {
       </TableCell>
       <TableCell align="right">
         <Button
-          className={"vote-button "}
-          variant={vote.value === "MEDIUM" ? "contained" : "text"}
+          className={'vote-button '}
+          variant={vote.value === 'MEDIUM' ? 'contained' : 'text'}
           size="large"
           disabled={visible}
-          color={"primary"}
+          color={'primary'}
           onClick={() =>
-            updateVotes({ category: vote.category, value: "MEDIUM", id })
+            updateVotes({ category: vote.category, value: 'MEDIUM', id })
           }
         >
           MEDIUM
@@ -64,29 +70,28 @@ const VotingRow = ({ vote, updateVotes, user }) => {
       </TableCell>
       <TableCell align="right">
         <Button
-          className={"vote-button "}
-          variant={vote.value === "HIGH" ? "contained" : "text"}
+          className={'vote-button '}
+          variant={vote.value === 'HIGH' ? 'contained' : 'text'}
           size="large"
           disabled={visible}
-          color={"primary"}
+          color={'primary'}
           onClick={() =>
-            updateVotes({ category: vote.category, value: "HIGH", id })
+            updateVotes({ category: vote.category, value: 'HIGH', id })
           }
         >
           HIGH
         </Button>
       </TableCell>
-
     </TableRow>
-  );
-};
+  )
+}
 
 VotingRow.propTypes = {
   user: PropTypes.object.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   user: state.user,
-});
+})
 
-export default connect(mapStateToProps, {})(VotingRow);
+export default connect(mapStateToProps, {})(VotingRow)
