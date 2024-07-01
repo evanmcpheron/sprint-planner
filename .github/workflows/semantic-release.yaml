@@ -58,6 +58,7 @@ jobs:
       - name: package.json version update
         id: info
         uses: jaywcjlove/github-action-package@main
+        path: client
       - run: echo "version - ${{ steps.semantic.outputs.new_release_version }}"
 
       - name: Update values.yaml
