@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: server
+    container_name: server
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./server:/home/node/server
+      - /home/node/server/node_modules
+    command: sh -c "nodemon --exec node ./server.js"
+    ports:
+      - '8080:8080'
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: client
+    container_name: client
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client:/home/node/client
+      - /home/node/client/node_modules
+    command: npm run start:dev
+    ports:
+      - '3000:3000'

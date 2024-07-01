@@ -1,4 +1,6 @@
-import openSocket from "socket.io-client";
+import openSocket from 'socket.io-client'
 export const socket = openSocket(
-  "https://sprint-planner-server.herokuapp.com/"
-);
+  process.env.NODE_ENV === 'production'
+    ? 'https://sprint-planner-server.herokuapp.com/'
+    : 'localhost:8080/'
+)
