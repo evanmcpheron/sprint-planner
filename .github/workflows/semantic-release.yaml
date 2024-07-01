@@ -55,12 +55,7 @@ jobs:
           echo ${{ steps.semantic.outputs.new_release_minor_version }}
           echo ${{ steps.semantic.outputs.new_release_patch_version }}
 
-      - name: client package.json version update
-        id: info
-        uses: jaywcjlove/github-action-package@main
-      - run: echo "version - ${{ steps.semantic.outputs.new_release_version }}"
-
-      - name: server package.json version update
+      - name: package.json version update
         id: info
         uses: jaywcjlove/github-action-package@main
       - run: echo "version - ${{ steps.semantic.outputs.new_release_version }}"
