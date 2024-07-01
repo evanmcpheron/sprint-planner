@@ -74,7 +74,7 @@ jobs:
           propertyPath: 'file.version'
           value: ${{ steps.semantic.outputs.new_release_version}}
       - name: Update second values.yaml version
-        uses: fjogeleit/yaml-update-action
+        uses: fjogeleit/yaml-update-action@main
         with:
           valueFile: './chart/values.yaml'
           propertyPath: 'file.appVersion'
