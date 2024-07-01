@@ -69,5 +69,5 @@ jobs:
           valueFile: 'chart/values.yaml'
           propertyPath: 'file.appVersion'
           branch: 'main'
-          force:true
+          force: true
           value: 'v${{steps.semantic.outputs.new_release_version}}'
