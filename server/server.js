@@ -8,7 +8,7 @@ import { Server } from 'socket.io'
 import routes from './v1/Routes/index.js'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-
+console.log('TESTING', process.env)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
