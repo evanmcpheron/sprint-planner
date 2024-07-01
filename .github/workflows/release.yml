@@ -3,9 +3,10 @@ name: Automated Release
 on:
   push:
     branches:
-      # Change this if your primary branch is not main
-      - master
-      - dev
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   main:
