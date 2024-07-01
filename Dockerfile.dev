@@ -37,7 +37,7 @@ RUN chown -R node:node ./temp \
 FROM base
 COPY --from=client /home/node/client/build /home/node/client
 COPY --from=server /home/node/server /home/node
-CMD [ "npm", "run" "start:dev" ]
+CMD [ "npm", "run", "start:dev" ]
 
 
 
