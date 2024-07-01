@@ -63,6 +63,7 @@ jobs:
           propertyPath: 'file.version'
           value: ${{ steps.semantic.outputs.new_release_version}}
           force: true
+          createPR: true
       - name: Update second values.yaml version
         uses: fjogeleit/yaml-update-action@main
         with:
@@ -70,4 +71,5 @@ jobs:
           propertyPath: 'file.appVersion'
           branch: 'main'
           force: true
+          createPR: true
           value: 'v${{steps.semantic.outputs.new_release_version}}'
