@@ -3,26 +3,21 @@ name: Automated Release
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      # Change this if your primary branch is not main
+      - master
+      - dev
 
 jobs:
-  build:
+  main:
     runs-on: ubuntu-latest
-
+    environment:
+      name: Semver #your environment name
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT }}
-          ref: main
-
-      - name: Update Version
-        uses: TriPSs/conventional-changelog-action@v5
-        with:
-          github-token: ${{ secrets.PAT }}
-          git-message: 'chore(release): {version}'
-          version-file: 'version.json'
-          version-path: '.'
+          persist-credentials: false
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
