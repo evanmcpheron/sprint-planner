@@ -2,39 +2,95 @@ name: Docker Image CI
 
 on:
   push:
-    tags:
-      - '*'
+    branch:
+      - main
 
 jobs:
+  semantic-release:
+  if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
+  name: Semantic Release
+  runs-on: ubuntu-latest
+  permissions:
+    contents: write
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 'lts/*'
+
+    - name: Prepare prerelease semantic
+      if: github.ref != 'refs/heads/main'
+      run: mv .releaserc.prerelease.yaml .releaserc.yaml
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v2
+      id: semantic # Need an `id` for output variables
+      with:
+        semantic_version: 17
+        extra_plugins: |
+          @semantic-release/changelog@5
+          @semantic-release/exec@5
+          @semantic-release/git@9
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+
+    - name: Do something when a new release published
+      if: steps.semantic.outputs.new_release_published == 'true'
+      run: |
+        echo ${{ steps.semantic.outputs.new_release_version }}
+        echo ${{ steps.semantic.outputs.new_release_major_version }}
+        echo ${{ steps.semantic.outputs.new_release_minor_version }}
+        echo ${{ steps.semantic.outputs.new_release_patch_version }}
+
+    - name: Change client version
+      uses: reedyuk/npm-version@1.1.1
+      with:
+        version: ${{steps.semantic.outputs.new_release_version}}
+        package: 'client/'
+        git-tag-version: 'true'
+
+    - name: Change server version
+      uses: reedyuk/npm-version@1.1.1
+      with:
+        version: ${{steps.semantic.outputs.new_release_version}}
+        package: 'server/'
+        git-tag-version: 'true'
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Extract Git tag
-      id: git_tag
-      run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Extract Git tag
+        id: git_tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-    - name: Build the Docker image
-      id: build
-      run: docker build . --file Dockerfile --tag emcpheron/sprint-planner:${{ env.TAG }}
+      - name: Build the Docker image
+        id: build
+        run: docker build . --file Dockerfile --tag emcpheron/sprint-planner:${{ env.TAG }}
 
-    - name: Tag the Docker image
-      id: tag
-      run: |
-        docker tag emcpheron/sprint-planner:${{ env.TAG }} emcpheron/sprint-planner:${{ env.TAG }}
-        echo "::set-output name=tag::${{ env.TAG }}"
+      - name: Tag the Docker image
+        id: tag
+        run: |
+          docker tag emcpheron/sprint-planner:${{ env.TAG }} emcpheron/sprint-planner:${{ env.TAG }}
+          echo "::set-output name=tag::${{ env.TAG }}"
 
-    - name: Push the Docker image to Docker Hub
-      run: |
-        docker push emcpheron/sprint-planner:${{ steps.tag.outputs.tag }}
+      - name: Push the Docker image to Docker Hub
+        run: |
+          docker push emcpheron/sprint-planner:${{ steps.tag.outputs.tag }}
