@@ -61,3 +61,10 @@ jobs:
           version: ${{steps.semantic.outputs.new_release_version}}
           package: 'client/'
           git-tag-version: 'true'
+
+      - name: Change server version
+        uses: reedyuk/npm-version@1.1.1
+        with:
+          version: ${{steps.semantic.outputs.new_release_version}}
+          package: 'server/'
+          git-tag-version: 'true'
