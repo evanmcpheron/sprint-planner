@@ -55,21 +55,9 @@ jobs:
           echo ${{ steps.semantic.outputs.new_release_minor_version }}
           echo ${{ steps.semantic.outputs.new_release_patch_version }}
 
-      - name: Update values.yaml
-        uses: fjogeleit/yaml-update-action@main
+      - name: Change client version
+        uses: reedyuk/npm-version@1.1.1
         with:
-          branch: 'main'
-          valueFile: 'chart/values.yaml'
-          propertyPath: 'file.version'
-          value: ${{ steps.semantic.outputs.new_release_version}}
-          force: true
-          createPR: true
-      - name: Update second values.yaml version
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          valueFile: 'chart/values.yaml'
-          propertyPath: 'file.appVersion'
-          branch: 'main'
-          force: true
-          createPR: true
-          value: 'v${{steps.semantic.outputs.new_release_version}}'
+          version: ${{steps.semantic.outputs.new_release_version}}
+          package: 'client/'
+          git-tag-version: 'true'
