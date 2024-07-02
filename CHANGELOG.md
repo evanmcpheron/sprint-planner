@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.2...v0.2.3) (2024-07-02)
+
+
+### Bug Fixes
+
+* fixes docker push when new tag is created ([7491697](https://github.com/evanmcpheron/sprint-planner/commit/749169764b9f4511c52c0a2debfe052e17b99f9f))
+
 ## [0.2.2](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.1...v0.2.2) (2024-07-02)
 
 
