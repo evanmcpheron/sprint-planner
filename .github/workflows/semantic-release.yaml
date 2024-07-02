@@ -55,27 +55,16 @@ jobs:
           echo ${{ steps.semantic.outputs.new_release_minor_version }}
           echo ${{ steps.semantic.outputs.new_release_patch_version }}
 
-      - name: client package.json version update
-        id: info
-        uses: jaywcjlove/github-action-package@main
-        path: ./client/package.json
-      - run: echo "version - ${{ steps.semantic.outputs.new_release_version }}"
-
-      - name: server package.json version update
-        id: info
-        uses: jaywcjlove/github-action-package@main
-        path: ./server/package.json
-      - run: echo "version - ${{ steps.semantic.outputs.new_release_version }}"
-
-      - name: Update values.yaml
-        uses: fjogeleit/yaml-update-action@main
+      - name: Change client version
+        uses: reedyuk/npm-version@1.1.1
         with:
-          valueFile: './chart/values.yaml'
-          propertyPath: 'file.version'
-          value: ${{ steps.semantic.outputs.new_release_version}}
-      - name: Update second values.yaml version
-        uses: fjogeleit/yaml-update-action
+          version: ${{steps.semantic.outputs.new_release_version}}
+          package: 'client/'
+          git-tag-version: 'true'
+
+      - name: Change server version
+        uses: reedyuk/npm-version@1.1.1
         with:
-          valueFile: './chart/values.yaml'
-          propertyPath: 'file.appVersion'
-          value: 'v${{steps.semantic.outputs.new_release_version}}'
+          version: ${{steps.semantic.outputs.new_release_version}}
+          package: 'server/'
+          git-tag-version: 'true'
