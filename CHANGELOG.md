@@ -1,3 +1,11 @@
+## [0.2.4](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.3...v0.2.4) (2024-07-02)
+
+
+### Bug Fixes
+
+* fixes yaml semantic updating ([e52283b](https://github.com/evanmcpheron/sprint-planner/commit/e52283bf6a564142a6ca05997f1bc19653c03754))
+* fixes yaml semantic updating ([b2da5a3](https://github.com/evanmcpheron/sprint-planner/commit/b2da5a3f0d860774bf707962cadd2726245534cf))
+
 ## [0.2.3](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.2...v0.2.3) (2024-07-02)
 
 
