@@ -68,3 +68,14 @@ jobs:
           version: ${{steps.semantic.outputs.new_release_version}}
           package: 'server/'
           git-tag-version: 'true'
+
+      - name: Update Image Version in the related HelmChart values.yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'chart/values.yaml'
+          propertyPath: 'backend.version'
+          value: ${{ steps.semantic.outputs.new_release_version }}
+          branch: deployment/${{ steps.image.outputs.version }}
+          targetBranch: development
+          createPR: true
+          message: 'Update Image Version to ${{ steps.semantic.outputs.new_release_version }}'
