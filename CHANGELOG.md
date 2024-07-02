@@ -1,3 +1,13 @@
+## [0.2.6](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.5...v0.2.6) (2024-07-02)
+
+
+### Bug Fixes
+
+* fixes when build runs ([1cb0d51](https://github.com/evanmcpheron/sprint-planner/commit/1cb0d51ee681d85e6694790cf1e1f293a9ad59d5))
+* fixes yaml semantic updating ([eca78a7](https://github.com/evanmcpheron/sprint-planner/commit/eca78a77af5adec7718fa4e57749011f6e9d0c84))
+* Update docker-image.yml ([b652bf7](https://github.com/evanmcpheron/sprint-planner/commit/b652bf798e19eaf0c62e0ca4b312cab045699732))
+* using PAT to trigger ([f34d8e9](https://github.com/evanmcpheron/sprint-planner/commit/f34d8e9fd8683f68cee036a01ae878ad1c189381))
+
 ## [0.2.5](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.4...v0.2.5) (2024-07-02)
 
 
