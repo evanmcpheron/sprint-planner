@@ -1,90 +1,28 @@
-## [0.2.9](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.8...v0.2.9) (2024-07-03)
+## [0.1.4](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.3...v0.1.4) (2024-07-05)
 
 
 ### Bug Fixes
 
-* fixes syntax error ([a6923aa](https://github.com/evanmcpheron/sprint-planner/commit/a6923aae519436731e0aabb12b9a24aa496cab0e))
+* removed delete method from workflow ([2f71847](https://github.com/evanmcpheron/sprint-planner/commit/2f71847565b9f0f43b5f08c5efd1b3158fd7e3db))
 
-## [0.2.8](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.7...v0.2.8) (2024-07-03)
-
-
-### Bug Fixes
-
-* working on workflow ([fcc7d2a](https://github.com/evanmcpheron/sprint-planner/commit/fcc7d2aaaba5eec64bf822c53242e7bddaa5642d))
-* working on workflow ([9a5d822](https://github.com/evanmcpheron/sprint-planner/commit/9a5d822a3251f5d6c50dee5d1b5bc557d44be5bd))
-
-## [0.2.7](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.6...v0.2.7) (2024-07-03)
+## [0.1.3](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.2...v0.1.3) (2024-07-05)
 
 
 ### Bug Fixes
 
-* working on workflow ([f247466](https://github.com/evanmcpheron/sprint-planner/commit/f2474660919405450497c511d673d45c82ac464f))
+* removed delete method from workflow ([31a8625](https://github.com/evanmcpheron/sprint-planner/commit/31a8625dfa01250c223316d82518b95581b95220))
+* removed delete method from workflow ([a1a3765](https://github.com/evanmcpheron/sprint-planner/commit/a1a3765f4cd1f5821bba63940fcbcafbd8ef0953))
 
-## [0.2.6](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.5...v0.2.6) (2024-07-02)
-
-
-### Bug Fixes
-
-* fixes when build runs ([1cb0d51](https://github.com/evanmcpheron/sprint-planner/commit/1cb0d51ee681d85e6694790cf1e1f293a9ad59d5))
-* fixes yaml semantic updating ([eca78a7](https://github.com/evanmcpheron/sprint-planner/commit/eca78a77af5adec7718fa4e57749011f6e9d0c84))
-* Update docker-image.yml ([b652bf7](https://github.com/evanmcpheron/sprint-planner/commit/b652bf798e19eaf0c62e0ca4b312cab045699732))
-* using PAT to trigger ([f34d8e9](https://github.com/evanmcpheron/sprint-planner/commit/f34d8e9fd8683f68cee036a01ae878ad1c189381))
-
-## [0.2.5](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.4...v0.2.5) (2024-07-02)
+## [0.1.2](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.1...v0.1.2) (2024-07-05)
 
 
 ### Bug Fixes
 
-* fixes yaml semantic updating ([a0fe14d](https://github.com/evanmcpheron/sprint-planner/commit/a0fe14d7ccfd6d5aafce32b6d8e665f4d4c20fb6))
+* updating commit messages for automation ([544daee](https://github.com/evanmcpheron/sprint-planner/commit/544daeefadda8dc96cfbcf6c1375710b5c14a694))
 
-## [0.2.4](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.3...v0.2.4) (2024-07-02)
-
-
-### Bug Fixes
-
-* fixes yaml semantic updating ([e52283b](https://github.com/evanmcpheron/sprint-planner/commit/e52283bf6a564142a6ca05997f1bc19653c03754))
-* fixes yaml semantic updating ([b2da5a3](https://github.com/evanmcpheron/sprint-planner/commit/b2da5a3f0d860774bf707962cadd2726245534cf))
-
-## [0.2.3](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.2...v0.2.3) (2024-07-02)
+## [0.1.1](https://github.com/evanmcpheron/sprint-planer/compare/v0.1.0...v0.1.1) (2024-07-05)
 
 
 ### Bug Fixes
 
-* fixes docker push when new tag is created ([7491697](https://github.com/evanmcpheron/sprint-planner/commit/749169764b9f4511c52c0a2debfe052e17b99f9f))
-
-## [0.2.2](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.1...v0.2.2) (2024-07-02)
-
-
-### Bug Fixes
-
-* fixes yaml semantic updating ([2e2d4b2](https://github.com/evanmcpheron/sprint-planner/commit/2e2d4b2b9c5f430848d56567ec2de75b117af0fe))
-* fixes yaml semantic updating ([ff2c679](https://github.com/evanmcpheron/sprint-planner/commit/ff2c679578acedd7fa51083a2de49269ad8515bf))
-* fixes yaml semantic updating ([e45919b](https://github.com/evanmcpheron/sprint-planner/commit/e45919b0071d37705edbc5a3c5281a9d6f9c8363))
-* fixes yaml semantic updating ([9c4bc7a](https://github.com/evanmcpheron/sprint-planner/commit/9c4bc7a3084a752091ca163ee9a6841d9b0d2bfd))
-* fixes yaml semantic updating ([8079b33](https://github.com/evanmcpheron/sprint-planner/commit/8079b33724f837393771cf7d61de351b40b5c7a2))
-* fixes yaml semantic updating ([57d6a13](https://github.com/evanmcpheron/sprint-planner/commit/57d6a13b270c0156722a7119adc40894b56139d0))
-* fixes yaml semantic updating ([3bce6c3](https://github.com/evanmcpheron/sprint-planner/commit/3bce6c399c7f80f7ba6dbf814a7e050f749b7370))
-* fixes yaml semantic updating ([73bc0a1](https://github.com/evanmcpheron/sprint-planner/commit/73bc0a1ce90bd6389ee42e060e3bd83f0cf30aa0))
-* fixes yaml semantic updating ([f2bffe3](https://github.com/evanmcpheron/sprint-planner/commit/f2bffe390c31e70bea18ab735f1f7291d96d6dbd))
-* fixes yaml semantic updating ([3cef2b2](https://github.com/evanmcpheron/sprint-planner/commit/3cef2b2a19d9d6094d5e4d5b3da2cbd84a406f2a))
-* fixes yaml semantic updating ([710ab3c](https://github.com/evanmcpheron/sprint-planner/commit/710ab3c1fa0c95066e114a8dd5d406f08e29c45c))
-* fixes yaml semantic updating ([755a876](https://github.com/evanmcpheron/sprint-planner/commit/755a8765263df91275f2cd8ff4046f54ef8116a9))
-* fixes yaml semantic updating ([18c1338](https://github.com/evanmcpheron/sprint-planner/commit/18c13389a1a1d21fb129e2565c2753ed5b52793b))
-* fixes yaml semantic updating ([04a3906](https://github.com/evanmcpheron/sprint-planner/commit/04a3906d26e46e6e2930c21cdb7c6f909343092f))
-* fixes yaml semantic updating ([5c80562](https://github.com/evanmcpheron/sprint-planner/commit/5c8056241bdc8cdfe9a1d5591796d928abd2313c))
-* fixes yaml semantic updating ([e9fce94](https://github.com/evanmcpheron/sprint-planner/commit/e9fce9407290cb33dc0516e7d7da6dd2f465f17f))
-* fixes yaml semantic updating ([fb0adb2](https://github.com/evanmcpheron/sprint-planner/commit/fb0adb2d0306ea5b6c8d19279eb12a4b298d13e5))
-
-## [0.2.1](https://github.com/evanmcpheron/sprint-planner/compare/v0.2.0...v0.2.1) (2024-07-01)
-
-
-### Bug Fixes
-
-* fixes unused dependency ([15a4a61](https://github.com/evanmcpheron/sprint-planner/commit/15a4a617523bdc37d1f2ce35eff92b694ac9ddb0))
-
-# [0.2.0](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.0...v0.2.0) (2024-07-01)
-
-
-### Features
-
-* fixing linting warnings ([386f24d](https://github.com/evanmcpheron/sprint-planner/commit/386f24df18baa098afa79652d31903f674fe62af))
+* updates pushing to docker hub ([c1d7981](https://github.com/evanmcpheron/sprint-planer/commit/c1d79816fdad6a2f44b919ea1845bfaa0072371a))

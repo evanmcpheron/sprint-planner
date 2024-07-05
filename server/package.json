@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.2.9",
+  "version": "0.1.4",
   "description": "",
   "main": "server.js",
   "type": "module",

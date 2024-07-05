@@ -7,7 +7,7 @@ on:
 
 jobs:
   semantic-release:
-    if: "!contains(github.event.head_commit.message, 'chore-')"
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     name: Semantic Release
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
         run: mv .releaserc.prerelease.yaml .releaserc.yaml
 
       - name: Semantic Release
-        if: github.event.head_commit.message != 'chore-${{ steps.previous_tag.outputs.tag }}'
+        if: github.event.head_commit.message != ${{ format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', steps.previous_tag.outputs.tag) }}
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
         with:
@@ -54,9 +54,8 @@ jobs:
         run: |
           echo 'new_release_version=${{steps.semantic.outputs.new_release_version}}' >> $GITHUB_OUTPUT
 
-
   docker:
-    if: "!contains(github.event.head_commit.message, 'chore-')"
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     needs: [semantic-release]
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -80,20 +79,19 @@ jobs:
       - name: Build the Docker image
         id: build
         run: |
-          echo ${{ needs.semantic-release.outputs.new_release_version }}
-          echo "${{ needs.semantic-release.outputs.new_release_version }}"
           docker build . --file Dockerfile --tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
       - name: Tag the Docker image
-        run: docker tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }} emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
+        run: |
+          docker tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }} emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
       - name: Push the Docker image to Docker Hub
-        run: docker push emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
-
+        run: |
+          docker push emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
   update-versions:
-    if: "!contains(github.event.head_commit.message, 'chore-')"
-    needs: [semantic-release, docker]
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    needs: [semantic-release,docker]
     name: Update Version Files
     runs-on: ubuntu-latest
     permissions:
@@ -116,7 +114,7 @@ jobs:
 
       - name: Create branch
         run: |
-          git checkout -b chore-${{ needs.semantic-release.outputs.previous_release_version }}
+          git checkout -b 'chore-${{ needs.semantic-release.outputs.previous_release_version }}'
 
       - name: Update client file versions
         uses: jaywcjlove/github-action-package@main
@@ -126,6 +124,7 @@ jobs:
             {
               "version": "${{ needs.semantic-release.outputs.new_release_version }}"
             }
+            
       - name: Update server file versions
         uses: jaywcjlove/github-action-package@main
         with:
@@ -143,8 +142,8 @@ jobs:
           value: '${{ needs.semantic-release.outputs.new_release_version }}'
           masterBranchName: main
           targetBranch: main
-          branch: chore-${{ needs.semantic-release.outputs.previous_tag }}
-          message: 'chore-${{ needs.semantic-release.outputs.previous_tag }}'
+          branch: 'chore-${{ needs.semantic-release.outputs.previous_release_version }}'
+          message: ${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.previous_release_version )}}
 
       - name: Update version for helm
         uses: fjogeleit/yaml-update-action@main
@@ -154,8 +153,8 @@ jobs:
           value: '${{ needs.semantic-release.outputs.new_release_version }}'
           masterBranchName: main
           targetBranch: main
-          branch: chore-${{ needs.semantic-release.outputs.new_release_version }}
-          message: 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
+          branch: 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
+          message: ${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.new_release_version )}}
 
       - name: Commit files
         run: |
@@ -163,12 +162,12 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config pull.rebase true
           git add .
-          git commit -m 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
-          git pull origin 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
+          git commit -m "${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.new_release_version )}}"
+          git pull origin chore-${{ needs.semantic-release.outputs.new_release_version }}
           git add .
 
       - name: Push changes
-        if: github.event.head_commit.message != 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
+        if: github.event.head_commit.message != ${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.new_release_version )}}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT }}
@@ -181,8 +180,8 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.PAT }}
-          commit-message: 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
-          title: 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
+          commit-message: ${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.new_release_version )}}
+          title: ${{format('chore{0}release{1}{2} {3} [skip ci]', '(', ')', ':', needs.semantic-release.outputs.new_release_version )}}
           source_branch: 'chore-${{ needs.semantic-release.outputs.new_release_version }}'
           target_branch: main
 
@@ -190,14 +189,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
-          echo "Pull Request Number - ${{ steps.pr.outputs.pr_number }}"
-          echo "Pull Request URL - ${{ steps.pr.outputs.url }}"
-          echo "Pull Request URL - ${{ toJSON(steps.pr.outputs) }}"
-          echo ${{ github.event.pull_request.number }}
           gh api \
           --method PUT \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${{ steps.pr.outputs.pr_number }}/merge \
            -f "${{format('commit_title=chore{0}release{1}{2} {3}', '(', ')', ':', needs.semantic-release.outputs.new_release_version) }} [skip ci]" -f "${{format('commit_message=chore{0}release{1}{2} {3}', '(', ')', ':', needs.semantic-release.outputs.new_release_version) }} [skip ci]"
-           
+

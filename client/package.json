@@ -1,6 +1,6 @@
 {
   "name": "socket-client",
-  "version": "0.2.9",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
