@@ -189,6 +189,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
+          echo ${{ steps.pr.outputs.pr_number }}
           gh api \
           --method PUT \
           -H "Accept: application/vnd.github+json" \
