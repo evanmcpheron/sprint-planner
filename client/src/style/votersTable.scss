@@ -1,0 +1,47 @@
+.voters-table-container {
+  width: 50%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  tr {
+    height: 75px;
+  }
+
+  #link-copy {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .admin-buttons-container {
+    margin-top: 20px;
+  }
+
+  .epic {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    0% {
+      color: red;
+    }
+
+    25% {
+      color: orange;
+    }
+
+    50% {
+      color: white;
+    }
+
+    75% {
+      color: orange;
+    }
+
+    100% {
+      color: red;
+    }
+  }
+}
