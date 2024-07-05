@@ -189,10 +189,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
-          echo ${{ steps.pr.outputs.pr_number }}
           gh api \
           --method PUT \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${{ steps.pr.outputs.pr_number }}/merge \
            -f "${{format('commit_title=chore{0}release{1}{2} {3}', '(', ')', ':', needs.semantic-release.outputs.new_release_version) }} [skip ci]" -f "${{format('commit_message=chore{0}release{1}{2} {3}', '(', ')', ':', needs.semantic-release.outputs.new_release_version) }} [skip ci]"
+
+      - name: Delete Branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.PAT}}
+          numbers: ${{ steps.pr.outputs.pr_number }}
