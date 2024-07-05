@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.4...v0.1.5) (2024-07-05)
+
+
+### Bug Fixes
+
+* removed delete method from workflow ([ca89123](https://github.com/evanmcpheron/sprint-planner/commit/ca89123081b69af9ab6587675fccae238bfd8236))
+
 ## [0.1.4](https://github.com/evanmcpheron/sprint-planner/compare/v0.1.3...v0.1.4) (2024-07-05)
 
 
