@@ -54,7 +54,6 @@ jobs:
         run: |
           echo 'new_release_version=${{steps.semantic.outputs.new_release_version}}' >> $GITHUB_OUTPUT
 
-
   docker:
     if: "!contains(github.event.head_commit.message, 'chore-')"
     needs: [semantic-release]
@@ -80,16 +79,15 @@ jobs:
       - name: Build the Docker image
         id: build
         run: |
-          echo ${{ needs.semantic-release.outputs.new_release_version }}
-          echo "${{ needs.semantic-release.outputs.new_release_version }}"
           docker build . --file Dockerfile --tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
       - name: Tag the Docker image
-        run: docker tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }} emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
+        run: |
+          docker tag emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }} emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
       - name: Push the Docker image to Docker Hub
-        run: docker push emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
-
+        run: |
+          docker push emcpheron/sprint-planner:${{ needs.semantic-release.outputs.new_release_version }}
 
   update-versions:
     if: "!contains(github.event.head_commit.message, 'chore-')"
