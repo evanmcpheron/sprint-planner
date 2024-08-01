@@ -10,7 +10,7 @@ node_modules
 /coverage
 
 # misc
-.env
+**/.env
 .env
 .DS_Store
 .env.local
