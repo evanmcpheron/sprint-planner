@@ -12,7 +12,7 @@ USER root
 WORKDIR client
 COPY ./client/package.json ./client/package-lock.json ./
 RUN chown node:node package.json package-lock.json ./
-RUN npm install
+RUN npm ci --legacy-peer-deps
 COPY ./client ./
 
 #Setup the server dependencies
@@ -24,7 +24,7 @@ COPY ./server/package.json ./server/package-lock.json ./
 RUN chown node:node package.json package-lock.json ./
 RUN npm i -g nodemon
 USER node
-RUN npm install
+RUN npm ci --legacy-peer-deps
 
 USER root
 COPY ./server ./temp/

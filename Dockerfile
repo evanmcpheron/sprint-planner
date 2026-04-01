@@ -12,7 +12,7 @@ USER root
 WORKDIR client
 COPY ./client/package.json ./client/package-lock.json ./
 RUN chown node:node package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 COPY ./client ./
 RUN npm run build \
     && chown node:node ./ \
@@ -27,7 +27,7 @@ COPY ./server/package.json ./server/package-lock.json ./
 RUN chown node:node package.json package-lock.json ./
 USER node
 
-RUN npm install --only=prod \
+RUN npm ci --only=prod \
     && npm cache clean --force \
     && npm cache verify
 
